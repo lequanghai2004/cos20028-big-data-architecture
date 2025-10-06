@@ -22,7 +22,7 @@ if __name__ == "__main__":
 
     # Convert to a RDD of Row objects with (movie_id, title)
     titles_rdd = movies \
-        .map(lambda line: line.split("\t")) \
+        .map(lambda line: line.split("|")) \
         .map(lambda fields: Row(movie_id=int(fields[0]), title=fields[1]))
 
     # Create a DataFrame for titles
