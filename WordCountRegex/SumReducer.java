@@ -1,5 +1,3 @@
-package stubs;
-
 import java.io.IOException;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
@@ -18,23 +16,23 @@ public class SumReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
     private int secondHighestCount = 0;
     private int wordsAppearingOnce = 0;
 
-	@Override
-	public void reduce(Text key, Iterable<IntWritable> values, Context context)
-	        throws IOException, InterruptedException {
+    @Override
+    public void reduce(Text key, Iterable<IntWritable> values, Context context)
+            throws IOException, InterruptedException {
 
         // Variable to hold the sum of counts for a word
-	    int count = 0;
+        int count = 0;
 
-	    // Sum up the counts for each word
-	    for (IntWritable value : values) {
-	        count += value.get();
-	    }
+        // Sum up the counts for each word
+        for (IntWritable value : values) {
+            count += value.get();
+        }
 
         // Write the word and its total count to context
         outputWord.set(key);
         outputCount.set(count);
         context.write(outputWord, outputCount);
-        
+
         // Update counter for words appearing exactly once
         if (count == 1) {
             wordsAppearingOnce++;
@@ -52,10 +50,10 @@ public class SumReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
             secondHighestCount = count;
             secondHighestWord = key.toString();
         }
-	}
+    }
 
-	@Override
-	protected void cleanup(Context context) throws IOException, InterruptedException {
+    @Override
+    protected void cleanup(Context context) throws IOException, InterruptedException {
 
         // Write the highest occurring word and its counts
         if (!highestWord.isEmpty()) {
@@ -63,7 +61,7 @@ public class SumReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
             outputCount.set(highestCount);
             context.write(outputWord, outputCount);
         }
-        
+
         // Write the second highest occurring word and its counts
         if (!secondHighestWord.isEmpty()) {
             outputWord.set("SECOND_HIGHEST_WORD: " + secondHighestWord);
@@ -75,6 +73,5 @@ public class SumReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
         outputWord.set("WORDS_APPEARING_ONCE");
         outputCount.set(wordsAppearingOnce);
         context.write(outputWord, outputCount);
-	}
+    }
 }
-

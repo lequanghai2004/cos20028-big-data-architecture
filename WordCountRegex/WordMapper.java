@@ -1,5 +1,3 @@
-package stubs;
-
 import java.io.IOException;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
@@ -18,7 +16,7 @@ public class WordMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
 	// Reusable object to hold output
 	private final static IntWritable one = new IntWritable(1);
 	private final static Text word = new Text();
-  
+
 	// The map method runs once for each line of text in the input file.
 	@Override
 	public void map(LongWritable key, Text value, Context context)
@@ -27,17 +25,14 @@ public class WordMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
 		// Convert the line from Text to String
 		String line = value.toString();
 
-	    // Use the pattern to find words that match the expression
-        Matcher matcher = pattern.matcher(line);
-        
-        // Write matched word to context with a count of one
-        while (matcher.find()) {
-        	String w = matcher.group();
-            word.set(w);
-            context.write(word, one);
-        }
+		// Use the pattern to find words that match the expression
+		Matcher matcher = pattern.matcher(line);
+
+		// Write matched word to context with a count of one
+		while (matcher.find()) {
+			String w = matcher.group();
+			word.set(w);
+			context.write(word, one);
+		}
 	}
 }
-
-
-
