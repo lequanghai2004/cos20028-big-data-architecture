@@ -33,11 +33,18 @@ if __name__ == "__main__":
     movie_sorted_average_ratings = movie_average_ratings \
         .sortBy(lambda pair: pair[1], ascending=False)
     
-    # Print the top 10 movies with highest average ratings with their titles
-    movie_titles = movies \
+        # Load movie metadata: (movie_id, title)
+    movie_metadata = movies \
         .map(lambda line: line.split('|')) \
-        .map(lambda fields: (int(fields[0]), fields[1])) \
-        .collectAsMap()
-    for (movie_id, avg_rating) in movie_sorted_average_ratings.take(10):
-        print(f"{movie_titles[movie_id]}: {avg_rating:.2f}") 
+        .map(lambda fields: (int(fields[0]), fields[1]))
 
+    # Join average ratings with movie titles
+    movie_full_sorted_average_ratings = movie_sorted_average_ratings \
+        .join(movie_metadata) \
+        .map(lambda pair: (pair[1][1], pair[1][0]))  # (title, average_rating)
+
+    # Collect and print results
+    for title, avg_rating in movie_full_sorted_average_ratings.collect():
+        print(f"{title}: {avg_rating:.2f}")
+    spark_context.stop()
+    
