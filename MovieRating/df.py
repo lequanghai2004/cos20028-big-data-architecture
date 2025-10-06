@@ -36,7 +36,7 @@ if __name__ == "__main__":
         .filter(average_ratings_df["avg(rating)"] > 3.5) \
         .join(titles_df, "movie_id") \
         .join(counts_df, "movie_id") \
-        .select("title", "avg(rating)")
+        .select("title", "avg(rating)", "count")
 
     # Sort by average rating in descending order
     sorted_popular_movies = popular_movies.orderBy(functions.desc("avg(rating)"))
