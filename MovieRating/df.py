@@ -7,30 +7,33 @@ if __name__ == "__main__":
 
     # Load the data
     lines = spark.sparkContext.textFile("ml-100k/ratings")
+    movies = spark.sparkContext.textFile("ml-100k/movies")
 
     # Convert to a RRD of Row objects with (user_id, movie_id, rating)
-    movies = lines \
+    ratings_rdd = lines \
         .map(lambda line: line.split("\t")) \
         .map(lambda fields: Row(movie_id=int(fields[1]), rating=float(fields[2])))
     
-    # Create a DataFrame from the RDD
-    movie_df = spark.createDataFrame(movies)
+    # Create a DataFrame for ratings
+    ratings_df = spark.createDataFrame(ratings_rdd)
 
     # Compute average rating for each movie
-    average_ratings = movie_df \
-        .groupBy("movie_id") \
-        .avg("rating") \
-        .withColumnRenamed("avg(rating)", "average_rating")
-    
-    # Compute the number of ratings for each movie
-    rating_counts = movie_df \
-        .groupBy("movie_id") \
-        .count()
-    
-    # Join average ratings with rating counts
-    movies_with_average_and_counts = average_ratings \
-        .join(rating_counts, "movie_id") \
-        .orderBy(functions.desc("average_rating"))
+    average_ratings_df = ratings_df.groupBy("movie_id").avg("rating")
+
+    # Convert to a RDD of Row objects with (movie_id, title)
+    titles_rdd = movies.map(lambda line: line.split("\t")).map(lambda fields: (int(fields[0]), fields[1]))
+
+    # Create a DataFrame for titles
+    titles_df = spark.createDataFrame(titles_rdd, ["movie_id", "title"])
+
+    # Join average ratings with titles, filter for movies with avg rating > 3.5
+    popular_movies = average_ratings_df \
+        .filter(average_ratings_df["avg(rating)"] > 3.5) \
+        .join(titles_df, "movie_id") \
+        .select("title", "avg(rating)")
+
+    # Sort by average rating in descending order
+    sorted_popular_movies = popular_movies.orderBy(functions.desc("avg(rating)"))
     
     # Show the results
-    movies_with_average_and_counts.show()
+    sorted_popular_movies.show()
