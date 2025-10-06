@@ -6,7 +6,7 @@ if __name__ == "__main__":
     spark = SparkSession.builder.appName("Popular Movie").getOrCreate()
 
     # Load the data
-    lines = spark.sparkContext.textFile("ml-100k/u.data")
+    lines = spark.sparkContext.textFile("ml-100k/ratings")
 
     # Convert to a RRD of Row objects with (user_id, movie_id, rating)
     movies = lines \
