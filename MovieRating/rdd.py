@@ -13,10 +13,11 @@ if __name__ == "__main__":
     spark_context = SparkContext(conf=spark_config)
 
     # Load data in recillable distributed dataset
-    lines = spark_context.textFile("ml-100k/ratings")
+    movies = spark_context.textFile("ml-100k/movies")
+    ratings = spark_context.textFile("ml-100k/ratings")
 
     # Convert to (movie_id, (rating, 1)) pairs
-    movie_ratings = lines \
+    movie_ratings = ratings \
         .map(lambda line: line.split('\t')) \
         .map(lambda fields: (int(fields[1]), (float(fields[2]), 1)))
 
@@ -32,18 +33,11 @@ if __name__ == "__main__":
     movie_sorted_average_ratings = movie_average_ratings \
         .sortBy(lambda pair: pair[1], ascending=False)
     
-    # Load movie metadata
-    lines = spark_context.textFile("ml-100k/movies")
-    movie_metadata = lines \
+    # Print the top 10 movies with highest average ratings with their titles
+    movie_titles = movies \
         .map(lambda line: line.split('|')) \
-        .map(lambda fields: (int(fields[0]), fields[1]))
+        .map(lambda fields: (int(fields[0]), fields[1])) \
+        .collectAsMap()
+    for (movie_id, avg_rating) in movie_sorted_average_ratings.take(10):
+        print(f"{movie_titles[movie_id]}: {avg_rating:.2f}") 
 
-    # Join average ratings with movie metadata
-    movie_full_sorted_average_ratings = movie_sorted_average_ratings \
-        .join(movie_metadata) \
-        .map(lambda pair: (pair[1][1], pair[1][0]))
-    
-    # Collect and print results
-    results = movie_full_sorted_average_ratings.collect()
-    for result in results:
-        print(str(result))
