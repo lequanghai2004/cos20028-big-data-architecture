@@ -33,6 +33,6 @@ if __name__ == "__main__":
         .sortBy(lambda pair: pair[1], ascending=False)
     
     # Collect and print results
-    results = movie_sorted_average_ratings.take(10)
+    results = movie_sorted_average_ratings.collect()
     for result in results:
         print(result)
