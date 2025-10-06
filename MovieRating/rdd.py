@@ -1,4 +1,4 @@
-from spark import SparkConf, SparkContext
+from pyspark import SparkConf, SparkContext
 
 '''
     Example of using RDDs to compute average movie ratings.
