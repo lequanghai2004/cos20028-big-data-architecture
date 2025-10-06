@@ -32,7 +32,18 @@ if __name__ == "__main__":
     movie_sorted_average_ratings = movie_average_ratings \
         .sortBy(lambda pair: pair[1], ascending=False)
     
+    # Load movie metadata
+    lines = spark_context.textFile("ml-100k/movies")
+    movie_metadata = lines \
+        .map(lambda line: line.split('|')) \
+        .map(lambda fields: (int(fields[0]), fields[1]))
+
+    # Join average ratings with movie metadata
+    movie_ratings_with_metadata = movie_sorted_average_ratings \
+        .join(movie_metadata) \
+        .map(lambda pair: (pair[1][1], pair[1][0]))  # (movie_title, average_rating)
+    
     # Collect and print results
-    results = movie_sorted_average_ratings.collect()
+    results = movie_ratings_with_metadata.collect()
     for result in results:
         print(result)
