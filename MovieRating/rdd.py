@@ -39,11 +39,11 @@ if __name__ == "__main__":
         .map(lambda fields: (int(fields[0]), fields[1]))
 
     # Join average ratings with movie metadata
-    movie_ratings_with_metadata = movie_sorted_average_ratings \
+    movie_full_sorted_average_ratings = movie_sorted_average_ratings \
         .join(movie_metadata) \
-        .map(lambda pair: (pair[1][1], pair[1][0]))  # (movie_title, average_rating)
+        .map(lambda pair: (pair[1][1], pair[1][0]))
     
     # Collect and print results
-    results = movie_ratings_with_metadata.collect()
+    results = movie_full_sorted_average_ratings.collect()
     for result in results:
-        print(result)
+        print(str(result))
