@@ -15,13 +15,15 @@ if __name__ == "__main__":
         .map(lambda fields: Row(movie_id=int(fields[1]), rating=float(fields[2])))
     
     # Create a DataFrame for ratings
-    ratings_df = spark.createDataFrame(ratings_rdd)
+    ratings_df = spark.createDataFrame(ratings_rdd, ["movie_id", "rating"])
 
     # Compute average rating for each movie
     average_ratings_df = ratings_df.groupBy("movie_id").avg("rating")
 
     # Convert to a RDD of Row objects with (movie_id, title)
-    titles_rdd = movies.map(lambda line: line.split("\t")).map(lambda fields: (int(fields[0]), fields[1]))
+    titles_rdd = movies \
+        .map(lambda line: line.split("\t")) \
+        .map(lambda fields: Row(movie_id=int(fields[0]), title=fields[1]))
 
     # Create a DataFrame for titles
     titles_df = spark.createDataFrame(titles_rdd, ["movie_id", "title"])
