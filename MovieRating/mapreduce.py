@@ -4,11 +4,9 @@ from mrjob.step import MRStep
 
 class MovieRating(MRJob):
     def mapper(self, _, line):
-        # Assuming the input format is: user_id,movie_id,rating
         try:
-            user_id, movie_id, rating = line.split(',')
-            rating = float(rating)
-            yield movie_id, (rating, 1)  # Emit movie_id with (rating, count)
+            user_id, movie_id, rating, time = line.split(',')
+            yield movie_id, (float(rating), 1)
         except ValueError:
             pass  # Skip lines with incorrect format
 
@@ -31,10 +29,11 @@ class MovieRating(MRJob):
             yield movie_id, average_rating
 
     def steps(self):
-        return [
-            MRStep(
-                mapper=self.mapper,
-                combiner=self.combiner,
-                reducer=self.reducer
-            )
-        ]
+        return [MRStep(self.mapper, self.combiner, self.reducer)]
+
+# This script calculates the average movie rating using MapReduce paradigm.
+# It reads input data in the format user_id,movie_id,rating,time.
+# It outputs the average rating for each movie_id.
+# To run the script, use the command: python mapreduce.py input.txt > output.txt
+if __name__ == '__main__':
+    MovieRating.run()

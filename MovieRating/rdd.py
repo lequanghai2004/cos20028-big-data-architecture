@@ -9,11 +9,11 @@ from spark import SparkConf, SparkContext
 '''
 
 if __name__ == "__main__":
-    config = SparkConf().setAppName("MovieRating")
-    context = SparkContext(conf=config)
+    spark_config = SparkConf().setAppName("MovieRating")
+    spark_context = SparkContext(conf=spark_config)
 
     # Load data in recillable distributed dataset
-    lines = context.textFile("ml-older/u.data")
+    lines = spark_context.textFile("ml-older/u.data")
 
     # Convert to (movie_id, (rating, 1)) pairs
     movie_ratings = lines \
