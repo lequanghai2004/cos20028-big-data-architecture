@@ -29,22 +29,21 @@ if __name__ == "__main__":
     movie_average_ratings = movie_rating_totals_and_counts \
         .mapValues(lambda total_and_count: total_and_count[0] / total_and_count[1])
     
-    # Sort by average rating in descending order
-    movie_sorted_average_ratings = movie_average_ratings \
-        .sortBy(lambda pair: pair[1], ascending=False)
-    
-        # Load movie metadata: (movie_id, title)
-    movie_metadata = movies \
+    # Load movie titles and convert to (movie_id, movie_title) pairs
+    movie_titles = movies \
         .map(lambda line: line.split('|')) \
         .map(lambda fields: (int(fields[0]), fields[1]))
-
-    # Join average ratings with movie titles
-    movie_full_sorted_average_ratings = movie_sorted_average_ratings \
-        .join(movie_metadata) \
-        .map(lambda pair: (pair[1][1], pair[1][0]))  # (title, average_rating)
-
-    # Collect and print results
-    for title, avg_rating in movie_full_sorted_average_ratings.collect():
-        print(title.encode('utf-8') + " : " + str(avg_rating))
-    spark_context.stop()
+    
+    # Join average ratings with movie titles to get (movie_title, average_rating) pairs
+    movies_with_average_ratings = movie_titles.join(movie_average_ratings) \
+        .map(lambda pair: (pair[1][0], pair[1][1]))
+    
+    # Sort by average rating in descending order
+    sorted_movies_with_average_ratings = movies_with_average_ratings \
+        .sortBy(lambda pair: pair[1], ascending=False)
+    
+    # Collect and print the results
+    results = sorted_movies_with_average_ratings.collect()
+    for result in results:
+        print(result)
     
