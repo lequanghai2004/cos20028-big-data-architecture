@@ -13,7 +13,7 @@ if __name__ == "__main__":
     spark_context = SparkContext(conf=spark_config)
 
     # Load data in recillable distributed dataset
-    lines = spark_context.textFile("ml-older/u.data")
+    lines = spark_context.textFile("ml-100k/ratings")
 
     # Convert to (movie_id, (rating, 1)) pairs
     movie_ratings = lines \
