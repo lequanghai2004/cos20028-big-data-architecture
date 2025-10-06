@@ -45,6 +45,6 @@ if __name__ == "__main__":
 
     # Collect and print results
     for title, avg_rating in movie_full_sorted_average_ratings.collect():
-        print(str(title) + " : " + str(avg_rating))
+        print(title.encode('utf-8') + " : " + str(avg_rating))
     spark_context.stop()
     
