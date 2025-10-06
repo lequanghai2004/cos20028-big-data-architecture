@@ -9,12 +9,12 @@ from pyspark import SparkConf, SparkContext
 '''
 
 if __name__ == "__main__":
-    spark_config = SparkConf().setAppName("MovieRating")
-    spark_context = SparkContext(conf=spark_config)
+    conf = SparkConf().setAppName("MovieRating")
+    sc = SparkContext(conf=conf)
 
     # Load data in recillable distributed dataset
-    movies = spark_context.textFile("ml-100k/movies")
-    ratings = spark_context.textFile("ml-100k/ratings")
+    movies = sc.textFile("ml-100k/movies")
+    ratings = sc.textFile("ml-100k/ratings")
 
     # Convert to (movie_id, (rating, 1)) pairs
     movie_ratings = ratings \
@@ -35,7 +35,8 @@ if __name__ == "__main__":
         .map(lambda fields: (int(fields[0]), fields[1]))
     
     # Join average ratings with movie titles to get (movie_title, average_rating) pairs
-    movies_with_average_ratings = movie_titles.join(movie_average_ratings) \
+    movies_with_average_ratings = movie_titles \
+        .join(movie_average_ratings) \
         .map(lambda pair: (pair[1][0], pair[1][1]))
     
     # Sort by average rating in descending order
