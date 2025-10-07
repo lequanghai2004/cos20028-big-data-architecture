@@ -6,11 +6,11 @@ if __name__ == "__main__":
     spark = SparkSession.builder.appName("Popular Movie").getOrCreate()
 
     # Load the data
-    lines = spark.sparkContext.textFile("ml-100k/ratings")
-    movies = spark.sparkContext.textFile("ml-100k/movies")
+    ratings_data = spark.sparkContext.textFile("ml-100k/ratings")
+    movies_data = spark.sparkContext.textFile("ml-100k/movies")
 
     # Convert to a RRD of Row objects with (user_id, movie_id, rating)
-    ratings_rdd = lines \
+    ratings_rdd = ratings_data \
         .map(lambda line: line.split("\t")) \
         .map(lambda fields: Row(movie_id=int(fields[1]), rating=float(fields[2])))
     
@@ -21,7 +21,7 @@ if __name__ == "__main__":
     average_ratings_df = ratings_df.groupBy("movie_id").avg("rating")
 
     # Convert to a RDD of Row objects with (movie_id, title)
-    titles_rdd = movies \
+    titles_rdd = movies_data \
         .map(lambda line: line.split("|")) \
         .map(lambda fields: Row(movie_id=int(fields[0]), title=fields[1]))
 
