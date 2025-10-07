@@ -49,7 +49,7 @@ public class WordCountShifted extends Configured implements Tool {
     }
 
     public static void main(String[] args) throws Exception {
-        int exitCode = ToolRunner.run(new WordCount(), args);
+        int exitCode = ToolRunner.run(new WordCountShifted(), args);
         System.exit(exitCode);
     }
 }
