@@ -13,7 +13,7 @@ public class LineMapper extends Mapper<Object, Text, Text, IntWritable> {
 
     @Override
     protected void map(Object key, Text value, Context context) throws IOException, InterruptedException {
-    
+        
         context.write(line, one);
     }
 }

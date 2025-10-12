@@ -1,3 +1,5 @@
+[^.]* # Ignore all files without an extension
+
 *.class
 *.jar
 *.gz
