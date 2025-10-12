@@ -1,6 +1,5 @@
 package Partitioner;
 
-import java.io.IOException;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
@@ -16,15 +15,14 @@ import org.apache.hadoop.mapreduce.Job;
 public class ProcessLogs extends Configured implements Tool {
 
     @Override
-    public int run(String[] args) 
-        throws IOException, InterruptedException, ClassNotFoundException {
+    public int run(String[] args) throws Exception {
 
         if (args.length != 2) {
             System.err.println("Usage: ProcessLogs <input path> <output path>");
             System.exit(-1);
         }
 
-        Configuration conf = new Configuration();
+        Configuration conf = getConf();
         Job job = Job.getInstance(conf, "Process Logs");
         job.setJarByClass(ProcessLogs.class);
         
@@ -47,7 +45,7 @@ public class ProcessLogs extends Configured implements Tool {
 
     public static void main(String[] args) throws Exception {
 
-        int exitCode = ToolRunner.run(new ProcessLogs(), args);
+        int exitCode = ToolRunner.run(new Configuration(), new ProcessLogs(), args);
         System.exit(exitCode);
     }
 }
