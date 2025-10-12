@@ -18,7 +18,7 @@ public class Driver extends Configured implements Tool {
     @Override
     public int run(String[] args) throws Exception {
         
-        if (args.length != 2) {
+        if(args.length != 2) {
             System.out.printf("Usage: Driver <input dir> <output dir>\n");
             return -1;
         }

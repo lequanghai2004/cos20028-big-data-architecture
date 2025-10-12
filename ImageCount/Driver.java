@@ -16,7 +16,7 @@ public class Driver extends Configured implements Tool {
     @Override
     public int run(String[] args) throws Exception {
 
-        if (args.length != 2) {
+        if(args.length != 2) {
             System.out.println("Usage: ImageCount <input dir> <output dir>");
             return -1;
         }

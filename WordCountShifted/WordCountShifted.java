@@ -19,7 +19,7 @@ public class WordCountShifted extends Configured implements Tool {
     public int run(String[] args) throws Exception {
 
         // Ensure correct argument count
-        if (args.length != 2) {
+        if(args.length != 2) {
             System.out.println("Usage: WordCount <input dir> <output dir>");
             return -1;
         }

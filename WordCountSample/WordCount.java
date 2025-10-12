@@ -26,7 +26,7 @@ public class WordCount {
          * input and output data. Terminate the job if the number of
          * command-line arguments is not exactly 2.
          */
-        if (args.length != 2) {
+        if(args.length != 2) {
             System.out.printf(
                     "Usage: WordCount <input dir> <output dir>\n");
             System.exit(-1);

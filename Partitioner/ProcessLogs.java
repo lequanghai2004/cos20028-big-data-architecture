@@ -17,7 +17,7 @@ public class ProcessLogs extends Configured implements Tool {
     @Override
     public int run(String[] args) throws Exception {
 
-        if (args.length != 2) {
+        if(args.length != 2) {
             System.err.println("Usage: ProcessLogs <input path> <output path>");
             System.exit(-1);
         }

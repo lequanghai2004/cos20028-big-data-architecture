@@ -28,7 +28,7 @@ public class Assignment1Driver {
 		System.out.println();
 
 		// The expected arguments are the paths containing input and output data.
-		if (args.length != 2) {
+		if(args.length != 2) {
 			System.out.println("Usage: Assignment1Driver <input dir> <output dir>\n");
 			System.exit(-1);
 		}
