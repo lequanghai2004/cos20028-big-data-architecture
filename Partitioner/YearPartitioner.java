@@ -13,7 +13,7 @@ public class YearPartitioner extends Partitioner<Text, IntWritable> implements C
 
     private Configuration configuration;
     private static HashMap<String, Integer> yearMap = new HashMap<>();
-    private String[] yearList = {"2019", "2020", "2021"};
+    private String[] yearList = {"2009", "2010", "2011"};
 
     @Override
     public Configuration getConf() {
