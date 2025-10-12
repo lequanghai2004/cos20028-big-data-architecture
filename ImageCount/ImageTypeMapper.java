@@ -1,4 +1,4 @@
-package ImageTypeCount;
+package ImageCount;
 
 import java.io.IOException;
 import java.util.regex.*;
