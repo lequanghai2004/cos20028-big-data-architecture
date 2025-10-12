@@ -1,4 +1,4 @@
-package Practitioner;
+package Partitioner;
 
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
