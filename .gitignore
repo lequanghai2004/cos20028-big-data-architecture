@@ -1,5 +1,9 @@
 *.class
 *.jar
+*.gz
+*.csv
+*.txt
+*.log
 
 .vscode/
 bin/
