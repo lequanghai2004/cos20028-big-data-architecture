@@ -5,7 +5,7 @@ import org.apache.hadoop.util.ToolRunner;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.reduce.LongSumReducer;
@@ -26,13 +26,12 @@ public class StringPairTestDriver extends Configured implements Tool {
 
         job.setMapperClass(StringPairMapper.class);
         job.setReducerClass(LongSumReducer.class);
-        job.setNumReduceTasks(1);
 
         job.setMapOutputKeyClass(StringPairWritable.class);
-        job.setMapOutputValueClass(IntWritable.class);
+        job.setMapOutputValueClass(LongWritable.class);
 
         job.setOutputKeyClass(StringPairWritable.class);
-        job.setOutputValueClass(IntWritable.class);
+        job.setOutputValueClass(LongSumReducer.class);
 
         FileInputFormat.addInputPath(job, new Path(args[0]));
         FileOutputFormat.setOutputPath(job, new Path(args[1]));
