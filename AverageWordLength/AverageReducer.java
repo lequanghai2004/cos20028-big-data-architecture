@@ -23,7 +23,7 @@ public class AverageReducer extends Reducer<Text, IntWritable, Text, FloatWritab
             wordCount++;
         }
 
-        float averageLength = wordCount == 0 ? 0 : totalLength / wordCount;
+        float averageLength = wordCount == 0 ? 0 : ((float) totalLength) / wordCount;
         result.set(averageLength);
         context.write(key, result);
     }
