@@ -16,12 +16,11 @@ public class ImageTypeMapper extends Mapper<LongWritable, Text, Text, Text> {
         String line = value.toString().toLowerCase();
 
         // Regex to match any filename ending with image extension
-        Pattern p = Pattern.compile(".*\\.(jpg|jpeg|png|gif|webp|svg|ico|tiff|raw|cr2|nef|arw|heic|psd)$");
+        Pattern p = Pattern.compile("\\.(jpg|jpeg|png|gif|webp|svg|ico|tiff|raw|cr2|nef|arw|heic|psd|indd|ai|eps)\\b");
         Matcher m = p.matcher(line);
 
         if (m.find()) {
             String imageType = m.group(1);
-            // Use Hadoop’s built-in counter dynamically
             context.getCounter("ImageTypes", imageType).increment(1);
         }
     }
