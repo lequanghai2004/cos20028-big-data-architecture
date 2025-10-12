@@ -33,6 +33,6 @@ public class YearPartitioner extends Partitioner<Text, IntWritable> implements C
     @Override
     public int getPartition(Text key, IntWritable value, int numPartitions) {
         
-        return yearMap.getOrDefault(yearMap.get(key.toString()), 0);
+        return yearMap.getOrDefault(key.toString(), 0);
     }
 }
