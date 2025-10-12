@@ -15,8 +15,8 @@ public class ImageTypeMapper extends Mapper<LongWritable, Text, Text, Text> {
 
         String line = value.toString().toLowerCase();
 
-        // Regex to match any filename ending with any extension
-        Pattern p = Pattern.compile("\\.([a-zA-Z0-9]+)(?:\\s|\\?|\"|$)");
+        // Regex to match any filename ending with image extension
+        Pattern p = Pattern.compile(".*\\.(jpg|jpeg|png|gif|webp|svg|ico|tiff|raw|cr2|nef|arw|heic|psd)$");
         Matcher m = p.matcher(line);
 
         if (m.find()) {

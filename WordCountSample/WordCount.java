@@ -1,4 +1,4 @@
-package stubs;
+package WordCountSample;
 
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
