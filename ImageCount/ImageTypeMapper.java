@@ -1,7 +1,8 @@
 package ImageCount;
 
 import java.io.IOException;
-import java.util.regex.*;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
@@ -14,8 +15,8 @@ public class ImageTypeMapper extends Mapper<LongWritable, Text, Text, Text> {
 
         String line = value.toString().toLowerCase();
 
-        // Regex to match any filename ending with an image extension
-        Pattern p = Pattern.compile("\\.(jpg|jpeg|png|gif|bmp|ico|tiff|webp)");
+        // Regex to match any filename ending with any extension
+        Pattern p = Pattern.compile("\\.([a-zA-Z0-9]+)(?:\\s|\\?|\"|$)");
         Matcher m = p.matcher(line);
 
         if (m.find()) {
