@@ -1,14 +1,15 @@
 package AverageWordLength;
 
+import org.apache.hadoop.io.FloatWritable;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 import java.io.IOException;
 
 
-public class AverageReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
+public class AverageReducer extends Reducer<Text, IntWritable, Text, FloatWritable> {
 
-    private final static IntWritable result = new IntWritable();
+    private final static FloatWritable result = new FloatWritable();
 
     @Override
     protected void reduce(Text key, Iterable<IntWritable> values, Context context) 
@@ -22,7 +23,7 @@ public class AverageReducer extends Reducer<Text, IntWritable, Text, IntWritable
             wordCount++;
         }
 
-        int averageLength = wordCount == 0 ? 0 : totalLength / wordCount;
+        float averageLength = wordCount == 0 ? 0 : totalLength / wordCount;
         result.set(averageLength);
         context.write(key, result);
     }

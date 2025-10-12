@@ -1,6 +1,7 @@
 package AverageWordLength;
 
 import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.io.FloatWritable;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
@@ -37,7 +38,7 @@ public class Driver extends Configured implements Tool {
         job.setMapOutputValueClass(IntWritable.class);
 
         job.setOutputKeyClass(Text.class);
-        job.setOutputValueClass(IntWritable.class);
+        job.setOutputValueClass(FloatWritable.class);
 
         boolean success = job.waitForCompletion(true);
         return success ? 0 : 1;
