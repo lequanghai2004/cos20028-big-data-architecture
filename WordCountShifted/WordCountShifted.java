@@ -25,15 +25,19 @@ public class WordCountShifted extends Configured implements Tool {
         }
 
         // Create job instance with configuration
-        Configuration conf = getConf();
+        Configuration conf = this.getConf();
         Job job = Job.getInstance(conf, "Word Count Shifted with ToolRunner");
         job.setJarByClass(WordCountShifted.class);
-
+        
         // Set Mapper and Reducer classes
         job.setMapperClass(WordMapper.class);
         job.setReducerClass(SumReducer.class);
-
-        // Set output key/value types
+        
+        // Set output key/value types for Mapper
+        job.setMapOutputKeyClass(Text.class);
+        job.setMapOutputValueClass(IntWritable.class);
+        
+        // Set output key/value types for Reducer
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(IntWritable.class);
 
