@@ -16,7 +16,7 @@ public class ReadCompressedSequenceFile extends Configured implements Tool {
     @Override
     public int run(String[] args) throws Exception {
 
-        if(args.length != 1) {
+        if(args.length != 2) {
             System.err.println("Usage: ReadCompressedSequenceFile <input path> <output path>");
             System.exit(-1);
         }
