@@ -5,10 +5,10 @@ hadoop fs -rm -r linecounts
 javac -classpath `hadoop classpath` LineCount/*.java
 
 # Create JAR file
-jar cvf wc.jar LineCount/*.class
+jar cvf LineCount/wc.jar LineCount/*.class
 
 # Run the Hadoop job
-hadoop jar wc.jar LineCount.Driver bible.tar.gz linecounts
+hadoop jar LineCount/wc.jar LineCount.Driver bible.tar.gz linecounts
 
 # Display the output
 hadoop fs -cat linecounts/part-r-00000
