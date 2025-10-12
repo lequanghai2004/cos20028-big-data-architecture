@@ -1,5 +1,5 @@
 # Remove previous output directory if it exists
-hadoop fs -rm -r linecounts
+hadoop fs -rm -r linecount
 
 # Compile Java files
 javac -classpath `hadoop classpath` LineCount/*.java
@@ -8,7 +8,7 @@ javac -classpath `hadoop classpath` LineCount/*.java
 jar cvf LineCount/wc.jar LineCount/*.class
 
 # Run the Hadoop job
-hadoop jar LineCount/wc.jar LineCount.Driver bible.tar.gz linecounts
+hadoop jar LineCount/wc.jar LineCount.Driver bible.tar.gz linecount
 
 # Display the output
-hadoop fs -cat linecounts/part-r-00000
+hadoop fs -cat linecount/part-r-00000
