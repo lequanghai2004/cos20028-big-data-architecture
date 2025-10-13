@@ -9,8 +9,6 @@ import java.io.IOException;
 
 public class AverageReducer extends Reducer<Text, IntWritable, Text, FloatWritable> {
 
-    private final static FloatWritable result = new FloatWritable();
-
     @Override
     protected void reduce(Text key, Iterable<IntWritable> values, Context context) 
         throws IOException, InterruptedException {
@@ -24,7 +22,6 @@ public class AverageReducer extends Reducer<Text, IntWritable, Text, FloatWritab
         }
 
         float averageLength = wordCount == 0 ? 0 : ((float) totalLength) / wordCount;
-        result.set(averageLength);
-        context.write(key, result);
+        context.write(key, new FloatWritable(averageLength));
     }
 }

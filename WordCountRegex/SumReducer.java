@@ -5,10 +5,6 @@ import org.apache.hadoop.mapreduce.Reducer;
 
 public class SumReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
 
-    // Reusable objects to write output
-    Text outputWord = new Text();
-    IntWritable outputCount = new IntWritable();
-
     // Variables to track top 2 words
     private String highestWord = "";
     private int highestCount = 0;
@@ -29,9 +25,7 @@ public class SumReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
         }
 
         // Write the word and its total count to context
-        outputWord.set(key);
-        outputCount.set(count);
-        context.write(outputWord, outputCount);
+        context.write(key, new IntWritable(count));
 
         // Update counter for words appearing exactly once
         if (count == 1) {
@@ -57,21 +51,15 @@ public class SumReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
 
         // Write the highest occurring word and its counts
         if (!highestWord.isEmpty()) {
-            outputWord.set("HIGHEST_WORD: " + highestWord);
-            outputCount.set(highestCount);
-            context.write(outputWord, outputCount);
+            context.write(new Text("HIGHEST_WORD: " + highestWord), new IntWritable(highestCount));
         }
 
         // Write the second highest occurring word and its counts
         if (!secondHighestWord.isEmpty()) {
-            outputWord.set("SECOND_HIGHEST_WORD: " + secondHighestWord);
-            outputCount.set(secondHighestCount);
-            context.write(outputWord, outputCount);
+            context.write(new Text("SECOND_HIGHEST_WORD: " + secondHighestWord), new IntWritable(secondHighestCount));
         }
 
         // Write the count of words that appeared exactly once
-        outputWord.set("WORDS_APPEARING_ONCE");
-        outputCount.set(wordsAppearingOnce);
-        context.write(outputWord, outputCount);
+        context.write(new Text("WORDS_APPEARING_ONCE"), new IntWritable(wordsAppearingOnce));
     }
 }

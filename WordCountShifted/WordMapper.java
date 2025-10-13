@@ -8,7 +8,6 @@ import org.apache.hadoop.mapreduce.Mapper;
 public class WordMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
 
     private final static IntWritable one = new IntWritable(1);
-    private Text word = new Text();
 
     @Override
     public void map(LongWritable key, Text value, Context context)
@@ -34,10 +33,10 @@ public class WordMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
          * Java code, search the web for "Java Regex Tutorial."
          */
         String[] words = line.split("\\W+");
-        for (String w : words) {
-            if (w.length() > 0) {
-                word.set(w);
-                context.write(word, one);
+        for (String word : words) {
+            if (word.length() > 0) {
+                Text text = new Text(word);
+                context.write(text, one);
             }
         }
     }

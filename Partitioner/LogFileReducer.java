@@ -7,8 +7,6 @@ import org.apache.hadoop.mapreduce.Reducer;
 
 public class LogFileReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
 
-    private IntWritable result = new IntWritable();
-    
     @Override
     protected void reduce(Text key, Iterable<IntWritable> values, Context context)
         throws java.io.IOException, InterruptedException {
@@ -17,7 +15,7 @@ public class LogFileReducer extends Reducer<Text, IntWritable, Text, IntWritable
         for (IntWritable val : values) {
             sum += val.get();
         }
-        result.set(sum);
-        context.write(key, result);
+        IntWritable count = new IntWritable(sum);
+        context.write(key, count);
     }
 }

@@ -17,7 +17,7 @@ public class ImageTypeMapper extends Mapper<LongWritable, Text, Text, IntWritabl
 
     @Override
     protected void map(LongWritable key, Text value, Context context)
-            throws IOException, InterruptedException {
+        throws IOException, InterruptedException {
 
         String line = value.toString().toLowerCase();
 
@@ -28,7 +28,7 @@ public class ImageTypeMapper extends Mapper<LongWritable, Text, Text, IntWritabl
             String imageType = m.group(1);
             context.getCounter("ImageTypes", imageType).increment(1);
             text.set(imageType);
-            context.write(text, one);            
+            context.write(text, one);
         }
     }
 }
