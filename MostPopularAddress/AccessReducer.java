@@ -10,13 +10,13 @@ public class AccessReducer extends Reducer<LongWritable, Text, LongWritable, Tex
     protected void reduce(LongWritable key, Iterable<Text> values, Context context) throws java.io.IOException, InterruptedException {
 
 
-        StringBuilder ips = new StringBuilder();
+        String listOfIps = "";
         for (Text val : values) {
-            if (ips.length() > 0) {
-                ips.append(", ");
+            if (!listOfIps.isEmpty()) {
+                listOfIps += ", ";
             }
-            ips.append(val.toString());
+            listOfIps += val.toString();
         }
-        context.write(key, new Text(ips.toString()));
+        context.write(key, new Text(listOfIps));
     }
 }
