@@ -35,8 +35,8 @@ public class AccessDriver extends Configured implements Tool {
         job.setMapOutputValueClass(LongWritable.class);
 
         // Set the output key and value types for the Reducer
-        job.setOutputKeyClass(Text.class);
-        job.setOutputValueClass(LongWritable.class);
+        job.setOutputKeyClass(LongWritable.class);
+        job.setOutputValueClass(Text.class);
 
         // Set input and output paths from command line arguments
         FileInputFormat.addInputPath(job, new Path(args[0]));
