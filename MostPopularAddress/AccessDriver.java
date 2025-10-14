@@ -28,7 +28,7 @@ public class AccessDriver extends Configured implements Tool {
 
         // Set the Mapper and Reducer classes
         job.setMapperClass(AccessMapper.class);
-        job.setNumReduceTasks(0);
+        job.setReducerClass(AccessReducer.class);
 
         // Set the output key and value types for the Mapper
         job.setMapOutputKeyClass(Text.class);
