@@ -23,8 +23,13 @@ public class AddressMapper extends Mapper<LongWritable, Text, Text, LongWritable
         if (parts.length > 0) {
             // The IP address is typically the first part of the log entry
             Text ipAddress = new Text(parts[0]);
-            // Emit the IP address with a count of one
-            context.write(ipAddress, one);
+
+            // Month extraction logic
+            String[] part2s = line.split("\\[\\d{2}/\\w{3}/");
+            if(part2s.length > 0) {
+                String month = part2s[0].substring(part2s[0].length() - 4, part2s[0].length() - 1);
+                context.write(new Text(ipAddress.toString() + "@@" + month), one);
+            }
         }
     }
 }
