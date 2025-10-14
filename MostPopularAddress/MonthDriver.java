@@ -11,7 +11,7 @@ import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
-public class AddressDriver extends Configured implements Tool {
+public class MonthDriver extends Configured implements Tool {
 
     @Override
     public int run(String[] args) throws Exception {
