@@ -11,7 +11,7 @@ import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
-public class Driver extends Configured implements Tool {
+public class AddressDriver extends Configured implements Tool {
 
     @Override
     public int run(String[] args) throws Exception {
@@ -23,7 +23,7 @@ public class Driver extends Configured implements Tool {
 
         Configuration conf = getConf();
         Job job = Job.getInstance(conf, "Most Popular Address");
-        job.setJarByClass(Driver.class);
+        job.setJarByClass(AddressDriver.class);
 
         // Set the Mapper and Reducer classes
         job.setMapperClass(AddressMapper.class);
@@ -47,7 +47,7 @@ public class Driver extends Configured implements Tool {
 
     public static void main(String[] args) throws Exception {
 
-        int exitCode = ToolRunner.run(new Driver(), args);
+        int exitCode = ToolRunner.run(new AddressDriver(), args);
         System.exit(exitCode);
     }
 }
