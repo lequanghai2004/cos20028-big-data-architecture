@@ -6,7 +6,7 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
 
-public class AccessMapper extends Mapper<LongWritable, Text, Text, LongWritable> {
+public class AccessMapper extends Mapper<LongWritable, Text, LongWritable, Text> {
 
     @Override // from offset (ip \t count) to count, ip
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
@@ -23,7 +23,7 @@ public class AccessMapper extends Mapper<LongWritable, Text, Text, LongWritable>
             Text ipAddress = new Text(parts[0]);
             LongWritable count = new LongWritable(Long.parseLong(parts[1]));
             // Emit the IP address with a count of one
-            context.write(ipAddress, count);
+            context.write(count, ipAddress);
         }
     }
 }
