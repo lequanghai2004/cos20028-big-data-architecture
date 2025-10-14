@@ -9,15 +9,15 @@ import java.io.IOException;
 public class TermFrequencyReducer
     extends Reducer<ArrayWritable, LongWritable, ArrayWritable, LongWritable> {
 
-    @Override // Sum up the counts for each (term, documentId) pair
+    @Override // Aggregate term frequency from (term, doc), [tf, tf, ...] to (term, doc), tf
     protected void reduce(ArrayWritable key, Iterable<LongWritable> values, Context context) 
         throws IOException, InterruptedException {
         
-        long sum = 0;
+        long count = 0;
         for (LongWritable value : values) {
-            sum += value.get();
+            count += value.get();
         }
-        LongWritable count = new LongWritable(sum);
-        context.write(key, count);
+        LongWritable tf = new LongWritable(count);
+        context.write(key, tf);
     }    
 }

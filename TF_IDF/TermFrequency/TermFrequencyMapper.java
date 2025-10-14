@@ -14,7 +14,7 @@ public class TermFrequencyMapper
     
     private final static LongWritable one = new LongWritable(1);
 
-    @Override // For each term in the document, emit ((term, documentId), 1)
+    @Override // For each term in the document, emit ((term, doc), 1)
     protected void map(LongWritable key, Text value, Context context) 
         throws IOException, InterruptedException {
         

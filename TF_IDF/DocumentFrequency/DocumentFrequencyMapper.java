@@ -8,11 +8,11 @@ import org.apache.hadoop.io.Text;
 
 
 public class DocumentFrequencyMapper 
-    extends Mapper<ArrayWritable, LongWritable, Text, ArrayWritable> {
+    extends Mapper<ArrayWritable, LongWritable, Text, LongWritable> {
 
     private final static LongWritable one = new LongWritable(1);
 
-    @Override
+    @Override // Map from ((term, doc), tf) to (term, 1)
     protected void map(ArrayWritable key, LongWritable value, Context context) 
         throws java.io.IOException, InterruptedException {
         
@@ -26,10 +26,6 @@ public class DocumentFrequencyMapper
         }
         
         Text term = (Text) pair[0];
-        Text document = (Text) pair[1];
-        LongWritable termFrequency = value;
-        Writable[] temp = new Writable[] {document, termFrequency, one};
-        ArrayWritable documentFrequency = new ArrayWritable(Writable.class, temp);
-        context.write(term, documentFrequency);
+        context.write(term, one);
     }
 }
