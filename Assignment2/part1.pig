@@ -1,5 +1,5 @@
 -- Load full ratings data
-ratings_full = LOAD '/assignment2/ratings_*.txt'
+ratings_full = LOAD 'assignment2/ratings_*.txt'
     USING PigStorage('\t')
     AS (
         time:chararray,
