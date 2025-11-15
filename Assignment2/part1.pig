@@ -14,6 +14,7 @@ defective2013 = FILTER ratings2013_with_line BY comment MATCHES '.*Shoddy.*' OR 
 defective2012_tagged = FOREACH defective2012 GENERATE 'ratings_2012.txt' AS file, rank_ratings2012 AS line, comment;
 defective2013_tagged = FOREACH defective2013 GENERATE 'ratings_2013.txt' AS file, rank_ratings2013 AS line, comment;
 
-all_defective = UNION defective2012_tagged, defective2013_tagged ORDER BY line;
+all_defective = UNION defective2012_tagged, defective2013_tagged;
+ordered_defective = ORDER all_defective BY comment;
 
-DUMP all_defective;
+DUMP ordered_defective;
