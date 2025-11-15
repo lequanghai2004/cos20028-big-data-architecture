@@ -19,10 +19,17 @@ cleaned = FOREACH raw GENERATE
 -- Group by year
 grouped = GROUP cleaned BY year;
 
--- Order within each group
-ordered = FOREACH grouped {
-    sorted = ORDER cleaned BY time ASC;
-    GENERATE group AS year, sorted;
+-- -- Order within each group
+-- ordered = FOREACH grouped {
+--     sorted = FOREACH (ORDER cleaned BY time ASC) GENERATE;
+--     GENERATE group AS year, sorted;
+-- };
+
+
+ranked = FOREACH grouped {
+    ordered = ORDER cleaned BY time ASC;
+    numbered = FOREACH (RANK ordered) GENERATE rank AS seq, *;
+    GENERATE group AS year, numbered;
 };
 
-DUMP ordered;
+DUMP ranked;
