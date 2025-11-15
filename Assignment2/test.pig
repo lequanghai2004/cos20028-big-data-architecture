@@ -21,7 +21,7 @@ grouped = GROUP cleaned BY year;
 -- Order and rank within each year
 ranked = FOREACH grouped {
     ordered = ORDER cleaned BY time ASC;
-    ranked_data = RANK ordered;
+    ranked_data = RANK ordered BY time ASC;
     GENERATE FLATTEN(ranked_data);
 };
 
