@@ -17,10 +17,10 @@ with_year = FOREACH raw GENERATE
     comment;
 
 -- Order records within each year by time
-grouped_by_year = GROUP ratings_with_year BY year;
+grouped_by_year = GROUP with_year BY year;
 
 ranked = FOREACH grouped_by_year {
-    ordered = ORDER ratings_with_year BY time ASC;
+    ordered = ORDER with_year BY time ASC;
     GENERATE FLATTEN(ordered);
 };
 
