@@ -1,4 +1,4 @@
--- Load the full ratings data with all fields
+-- Load full ratings data
 ratings_full = LOAD '/assignment2/ratings_*.txt'
     USING PigStorage('\t')
     AS (
@@ -13,25 +13,22 @@ ratings_full = LOAD '/assignment2/ratings_*.txt'
 ratings_with_location = FOREACH ratings_full GENERATE
     CONCAT('ratings_', SUBSTRING(time, 0, 4), '.txt') AS file,
     time,
+    rating,
     comment;
 
+-- Filter comments
 ratings_filtered = FILTER ratings_with_location
-    BY comment MATCHES '.*Shoddy.*' 
-    OR comment MATCHES '.*Item was defective.*';
+    BY (comment MATCHES '.*Shoddy.*' OR comment MATCHES '.*Item was defective.*');
 
--- Group by file to prepare for ranking
+-- Group by file
 ratings_grouped = GROUP ratings_filtered BY file;
 
--- Add line numbers within each file group based on time ordering
-rating_ordered = FOREACH ratings_grouped {
-    ordered = ORDER ratings_with_location BY time ASC;
+-- Order and rank within each group
+ratings_numbered = FOREACH ratings_grouped {
+    ordered = ORDER ratings_filtered BY time ASC;
+    ranked = RANK(ordered);
     GENERATE FLATTEN(ranked) AS (line:int, file:chararray, time:chararray, rating:int, comment:chararray);
 };
 
-ratings_numbered = FOREACH ratings_grouped {
-    ranked = RANK(ordered);
-    GENERATE FLATTEN(ranked) AS (line:int, file:chararray, time:chararray, comment:chararray);
-};
-
--- Dump the final result
-DUMP rating_numbered;
+-- Dump final result
+DUMP ratings_numbered;

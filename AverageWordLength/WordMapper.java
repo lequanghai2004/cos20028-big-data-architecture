@@ -25,5 +25,4 @@ public class WordMapper extends Mapper<Object, Text, Text, IntWritable> {
             }
         }
     }
-    
 }
