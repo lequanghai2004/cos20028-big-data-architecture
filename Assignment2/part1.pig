@@ -16,12 +16,13 @@ ratings2012_filtered = FILTER ratings2012_numbered
 ratings2013_filtered = FILTER ratings2013_numbered
     BY comment MATCHES '.*Shoddy.*' OR comment MATCHES '.*Item was defective.*';
 
+
 ratings2012_tagged = FOREACH ratings2012_filtered GENERATE
-    CONCAT('line ', rank_ratings2012) AS line,
+    CONCAT('line ', (chararray)rank_ratings2012) AS line,
     'file ratings_2012.txt' AS file,
     comment;
 ratings2013_tagged = FOREACH ratings2013_filtered GENERATE
-    CONCAT('line ', rank_ratings2013) AS line,
+    CONCAT('line ', (chararray)rank_ratings2013) AS line,
     'file ratings_2013.txt' AS file,
     comment;
 
