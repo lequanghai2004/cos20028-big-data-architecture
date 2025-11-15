@@ -5,16 +5,20 @@ ratings2013 = LOAD 'assignment2/ratings_2013.txt'
     USING PigStorage('\t')
     AS (datetime:chararray, id1:int, id2:int, rating:int, comment:chararray);
 
-ratings2012_with_line = RANK ratings2012;
-ratings2013_with_line = RANK ratings2013;
+ratings2012_numbered = RANK ratings2012;
+ratings2013_numbered = RANK ratings2013;
 
-defective2012 = FILTER ratings2012_with_line BY comment MATCHES '.*Shoddy.*' OR comment MATCHES '.*Item was defective.*';
-defective2013 = FILTER ratings2013_with_line BY comment MATCHES '.*Shoddy.*' OR comment MATCHES '.*Item was defective.*';
+ratings2012_filtered = FILTER ratings2012_numbered
+    BY comment MATCHES '.*Shoddy.*' OR comment MATCHES '.*Item was defective.*';
+ratings2013_filtered = FILTER ratings2013_numbered
+    BY comment MATCHES '.*Shoddy.*' OR comment MATCHES '.*Item was defective.*';
 
-defective2012_tagged = FOREACH defective2012 GENERATE 'ratings_2012.txt' AS file, rank_ratings2012 AS line, comment;
-defective2013_tagged = FOREACH defective2013 GENERATE 'ratings_2013.txt' AS file, rank_ratings2013 AS line, comment;
+ratings2012_tagged = FOREACH ratings2012_filtered
+    GENERATE 'ratings_2012.txt'
+    AS file, rank_ratings2012 AS line, comment;
+ratings2013_tagged = FOREACH ratings2013_filtered
+    GENERATE 'ratings_2013.txt'
+    AS file, rank_ratings2013 AS line, comment;
 
-all_defective = UNION defective2012_tagged, defective2013_tagged;
-ordered_defective = ORDER all_defective BY comment;
-
-DUMP ordered_defective;
+result = ORDER (UNION ratings2012_tagged, ratings2013_tagged) BY comment;
+DUMP result;
