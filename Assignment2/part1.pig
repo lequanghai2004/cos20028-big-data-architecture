@@ -12,9 +12,9 @@ ratings2012_numbered = RANK ratings2012;
 ratings2013_numbered = RANK ratings2013;
 
 ratings2012_filtered = FILTER ratings2012_numbered
-    BY comment MATCHES '.*Shoddy.*' OR comment MATCHES '.*Item was defective.*';
+    BY comment MATCHES 'Shoddy' OR comment == 'Item was defective';
 ratings2013_filtered = FILTER ratings2013_numbered
-    BY comment MATCHES '.*Shoddy.*' OR comment MATCHES '.*Item was defective.*';
+    BY comment MATCHES 'Shoddy' OR comment == 'Item was defective';
 
 
 ratings2012_tagged = FOREACH ratings2012_filtered GENERATE
