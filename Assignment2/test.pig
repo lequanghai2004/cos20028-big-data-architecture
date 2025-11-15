@@ -25,4 +25,4 @@ ordered = FOREACH grouped {
     GENERATE group AS year, sorted;
 };
 
-DUMP ranked;
+DUMP ordered;
