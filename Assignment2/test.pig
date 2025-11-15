@@ -22,13 +22,12 @@ grouped = GROUP cleaned BY year;
 -- Order and rank within each year
 ranked = FOREACH grouped {
     ordered = ORDER cleaned BY time ASC;
-    ranked_data = FOREACH ordered GENERATE
-        RANK() OVER (ORDER BY time ASC) AS line,
+    temp = FOREACH ordered GENERATE
         year,
         time,
         rating,
-        comment;
-    GENERATE FLATTEN(ranked_data);
+        comment,
+        RANK() AS rank;
 };
 
 DUMP ranked;
