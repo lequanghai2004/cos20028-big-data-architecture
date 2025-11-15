@@ -8,6 +8,16 @@ raw = LOAD 'assignment2/ratings_*.txt'
         rating:int,
         comment:chararray
     );
+/*
+    Schema:
+    (
+        time:chararray,
+        id1:int,
+        id2:int,
+        rating:int,
+        comment:chararray
+    )
+*/
 
 -- Extract year from time
 cleaned = FOREACH raw GENERATE
@@ -15,13 +25,21 @@ cleaned = FOREACH raw GENERATE
     time,
     rating,
     comment;
+/* 
+    Schema:
+    (
+        year:chararray,
+        time:chararray,
+        rating:int,
+        comment:chararray
+    )
+*/
 
--- Order records within each year by time
-grouped = GROUP cleaned BY year;
+ordered = ORDER cleaned BY year, time ASC;
 
-ranked = FOREACH grouped {
-    ordered = ORDER cleaned BY time ASC;
-    GENERATE FLATTEN(ordered);
+numbered = FOREACH (GROUP ordered ALL) {
+    ranked_data = RANK ordered;
+    GENERATE FLATTEN(ranked_data);
 };
 
-DUMP ranked;
+DUMP numbered;
