@@ -1,4 +1,4 @@
-package Question2;
+package Question4;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
@@ -24,12 +24,11 @@ public class Driver extends Configured implements Tool {
 
         Configuration conf = getConf();
         conf.setInt("column", column); // pass column index to Mapper via config
-        Job job = Job.getInstance(conf, "Assignment2 Part2 Question2");
+        Job job = Job.getInstance(conf, "Assignment2 Part2 Question4");
 
         job.setJarByClass(Driver.class);
         job.setMapperClass(EntityMapper.class);
-        job.setCombinerClass(EntityReducer.class);
-        job.setReducerClass(EntityReducer.class);
+        job.setNumReduceTasks(0);
 
         job.setOutputKeyClass(Text.class); // The unique value of the field
         job.setOutputValueClass(NullWritable.class); // No value needed in output
