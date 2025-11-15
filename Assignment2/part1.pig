@@ -1,5 +1,5 @@
 -- Load full ratings data
-ratings_full = LOAD 'assignment2/ratings_*.txt'
+ratings_raw = LOAD 'assignment2/ratings_*.txt'
     USING PigStorage('\t')
     AS (
         time:chararray,
@@ -9,26 +9,26 @@ ratings_full = LOAD 'assignment2/ratings_*.txt'
         comment:chararray
     );
 
--- Extract necessary fields and add file location
-ratings_with_location = FOREACH ratings_full GENERATE
-    CONCAT('ratings_', SUBSTRING(time, 0, 4), '.txt') AS file,
+-- Extract year from time
+ratings_with_year = FOREACH ratings_raw GENERATE
+    SUBSTRING(time, 0, 4) AS year,
     time,
     rating,
     comment;
 
--- Filter comments
-ratings_filtered = FILTER ratings_with_location
-    BY (comment MATCHES '.*Shoddy.*' OR comment MATCHES '.*Item was defective.*');
+-- Order records within each year by time
+ratings_grouped = GROUP ratings_with_year BY year;
 
--- Group by file
-ratings_grouped = GROUP ratings_filtered BY file;
+-- Rank records within each year
+ranked = FOREACH ratings_grouped {
+    ordered = ORDER ratings_with_year BY time ASC;
+    ranked_records = RANK ordered;
+    GENERATE FLATTEN(ranked_records);
+}
 
--- Order and rank within each group
-ratings_numbered = FOREACH ratings_grouped {
-    ordered = ORDER ratings_filtered BY time ASC;
-    ranked = RANK(ordered);
-    GENERATE FLATTEN(ranked) AS (line:int, file:chararray, time:chararray, rating:int, comment:chararray);
-};
-
--- Dump final result
-DUMP ratings_numbered;
+-- Add location column
+final = FOREACH ranked GENERATE
+    CONCAT('ratings_', year, '.txt') AS location,
+    time,
+    rating,
+    comment,
