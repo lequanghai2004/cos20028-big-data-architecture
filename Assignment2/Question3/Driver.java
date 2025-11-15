@@ -29,8 +29,8 @@ public class Driver extends Configured implements Tool {
         job.setOutputKeyClass(Text.class); // The unique value of the field
         job.setOutputValueClass(NullWritable.class); // No value needed in output
 
-        FileInputFormat.addInputPath(job, new Path(args[1]));
-        FileOutputFormat.setOutputPath(job, new Path(args[2]));
+        FileInputFormat.addInputPath(job, new Path(args[0]));
+        FileOutputFormat.setOutputPath(job, new Path(args[1]));
 
         return job.waitForCompletion(true) ? 0 : 1;
     }
