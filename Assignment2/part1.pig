@@ -1,9 +1,12 @@
 ratings2012 = LOAD 'assignment2/ratings_2012.txt'
     USING PigStorage('\t')
-    AS (datetime:chararray, id1:int, id2:int, rating:int, comment:chararray);
+    AS (time:chararray, id1:int, id2:int, rating:int, comment:chararray);
 ratings2013 = LOAD 'assignment2/ratings_2013.txt'
     USING PigStorage('\t')
-    AS (datetime:chararray, id1:int, id2:int, rating:int, comment:chararray);
+    AS (time:chararray, id1:int, id2:int, rating:int, comment:chararray);
+
+ratings2012_ordered = ORDER ratings2012 BY time ASC;
+ratings2013_ordered = ORDER ratings2013 BY time ASC;
 
 ratings2012_numbered = RANK ratings2012;
 ratings2013_numbered = RANK ratings2013;
