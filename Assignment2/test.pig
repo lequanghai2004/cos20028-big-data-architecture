@@ -1,4 +1,3 @@
--- Load full ratings data
 raw = LOAD 'assignment2/ratings_*.txt'
     USING PigStorage('\t')
     AS (
@@ -16,12 +15,20 @@ cleaned = FOREACH raw GENERATE
     rating,
     comment;
 
--- Order records within each year by time
+-- Group by year
 grouped = GROUP cleaned BY year;
 
+-- Order and rank within each year
 ranked = FOREACH grouped {
     ordered = ORDER cleaned BY time ASC;
-    GENERATE FLATTEN(ordered);
+    ranked_data = RANK ordered;
+    GENERATE FLATTEN(ranked_data);
 };
 
-DUMP ranked;
+-- Add location and rename rank as line
+final = FOREACH ranked GENERATE
+    CONCAT('ratings_', year, '.txt') AS location,
+    time,
+    rating,
+    comment,
+    $0 AS line;  -- $0 is the rank from RANK
