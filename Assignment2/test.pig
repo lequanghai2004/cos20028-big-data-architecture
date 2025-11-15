@@ -28,6 +28,7 @@ ranked = FOREACH grouped {
         rating,
         comment,
         RANK() AS rank;
+    GENERATE FLATTEN(temp);
 };
 
 DUMP ranked;
