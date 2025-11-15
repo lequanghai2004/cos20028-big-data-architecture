@@ -25,6 +25,7 @@ public class Driver extends Configured implements Tool {
 
         job.setJarByClass(Driver.class);
         job.setMapperClass(EntityMapper.class);
+        job.setNumReduceTasks(0);
 
         job.setOutputKeyClass(Text.class); // The unique value of the field
         job.setOutputValueClass(NullWritable.class); // No value needed in output
