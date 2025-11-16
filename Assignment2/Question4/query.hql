@@ -9,11 +9,11 @@ CREATE TABLE lng_thl (lng_thl STRING);
 CREATE TABLE lng_thp (lng_thp STRING);
 CREATE TABLE lng_st (lng_st STRING);
 
-CREATE TABLE rel_code_name (lng_code STRING, name STRING);
-CREATE TABLE rel_code_synonym (lng_code STRING, synonym STRING);
-CREATE TABLE rel_code_thl (lng_code STRING, thl STRING);
-CREATE TABLE rel_code_thp (lng_code STRING, thp STRING);
-CREATE TABLE rel_code_st (lng_code STRING, st STRING);
+CREATE TABLE rel_code_name (lng_code STRING, lng_name STRING);
+CREATE TABLE rel_code_synonym (lng_code STRING, lng_synonym STRING);
+CREATE TABLE rel_code_thl (lng_code STRING, lng_thl STRING);
+CREATE TABLE rel_code_thp (lng_code STRING, lng_thp STRING);
+CREATE TABLE rel_code_st (lng_code STRING, lng_st STRING);
 
 LOAD DATA INPATH 'assignment2/austlang_rdb/lng_id' OVERWRITE INTO TABLE lng_id;
 LOAD DATA INPATH 'assignment2/austlang_rdb/lng_name' OVERWRITE INTO TABLE lng_name;

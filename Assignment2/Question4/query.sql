@@ -59,3 +59,4 @@ CREATE TABLE rel_code_st (
     lng_code VARCHAR(255),
     lng_st VARCHAR(255)
 );
+
