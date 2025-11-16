@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS assignment2_part2 CASCADE;
-CREATE DATABASE IF NOT EXISTS assignment2_part2;
-USE assignment2_part2;
+DROP DATABASE IF EXISTS indigenous CASCADE;
+CREATE DATABASE IF NOT EXISTS indigenous;
+USE indigenous;
 
 CREATE TABLE lng_id (lng_code STRING, a_lng_lat STRING, a_lng_lng STRING, lng_uri STRING);
 CREATE TABLE lng_name (lng_name STRING);
