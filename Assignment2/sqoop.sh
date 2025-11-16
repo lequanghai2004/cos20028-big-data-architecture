@@ -1,3 +1,4 @@
+#!/bin/bash
 function sqoop_export() {
   local table_name=$1
   local export_dir=$2
