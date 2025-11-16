@@ -1,4 +1,4 @@
-function sqoop_export {
+function sqoop_export() {
   local table_name=$1
   local export_dir=$2
   local columns=$3
