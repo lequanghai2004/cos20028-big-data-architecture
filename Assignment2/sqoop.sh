@@ -12,13 +12,13 @@ function sqoop_export() {
     --table "$table_name" \
     --columns "$columns" \
     --export-dir "/user/training/assignment2/austlang_rdb/$export_dir" \
-    --fields-terminated-by '\t' \
+    --fields-terminated-by $'\t' \
     --m 1 > "log_${table_name}_export.txt" 2>&1
 
   if [ $? -eq 0 ]; then
     echo "Export of $table_name completed successfully."
   else
-    echo "Export of $table_name failed."
+    echo "Export of $table_name failed. Check log_${table_name}_export.txt for details."
   fi
 }
 
