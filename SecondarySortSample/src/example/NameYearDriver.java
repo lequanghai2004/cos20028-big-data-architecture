@@ -26,23 +26,20 @@ public class NameYearDriver extends Configured implements Tool {
 
 	public static void main(String[] args) throws Exception {
 
-		int exitcode = ToolRunner.run(new Configuration(),
-				new NameYearDriver(), args);
+		int exitcode = ToolRunner.run(new Configuration(), new NameYearDriver(), args);
 		System.exit(exitcode);
 	}
 
 	public int run(String[] args) throws Exception {
-		
 
 		if (args.length != 2) {
 			System.out.printf("Usage: " + this.getClass().getName() +  "<input dir> <output dir>\n");
 			System.exit(-1);
 		}
 		
-
+		@SuppressWarnings("deprecation")
 		Job job = new Job(getConf());
 		job.setJarByClass(NameYearDriver.class);
-
 		job.setJobName("Name Year Sort");
 
 		/*
@@ -57,6 +54,7 @@ public class NameYearDriver extends Configured implements Tool {
 		 */
 		job.setMapperClass(NameYearMapper.class);
 		//job.setReducerClass(NameYearReducer.class);
+		//job.setNumReduceTasks(0);
 
 		/*
 		 * The Mapper outputs StringPair objects in which the first string

@@ -56,5 +56,4 @@ public class NameComparator extends WritableComparator {
 
 		return compare(v1, v2);
 	}
-
 }

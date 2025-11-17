@@ -15,6 +15,9 @@ public class NameMapper extends Mapper<LongWritable, Text, Text, Text> {
     public void map(LongWritable key, Text value, Context context)
         throws IOException, InterruptedException {
 
+        // Input: John,Doe,30,New York,NY,USA,
+        // Output: (John, file1.csv)
+        
         String line = value.toString();
         String[] fields = line.split(",", -1);
         

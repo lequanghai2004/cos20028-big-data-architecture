@@ -7,17 +7,20 @@ hadoop jar wc4.jar Question4.Driver 3 assignment2/austlang_dataset_nh.txt assign
 hadoop jar wc4.jar Question4.Driver 4 assignment2/austlang_dataset_nh.txt assignment2/austlang_rdb/rel_code_thp;
 hadoop jar wc4.jar Question4.Driver 7 assignment2/austlang_dataset_nh.txt assignment2/austlang_rdb/rel_code_st;
 
-pig Assignment2Part1.pig
-hive -f Assignment2Part2.hql
+# pig Assignment2Part1.pig
+# hive -f Assignment2Part2.hql
 
-hive -f /Question4/query.sql
-mysql --user=training --password=training < Question4/query.sql
+# hive -f /Question4/query.sql
+# mysql --user=training --password=training < Question4/query.sql
 
-for table in lng_id  rel_code_name rel_code_synonym rel_code_thl rel_code_thp rel_code_st; do
-  hdfs dfs -cat /user/training/assignment2/austlang_rdb/$table/part-m-00000 | wc -l
-done
+# for table in lng_id  rel_code_name rel_code_synonym rel_code_thl rel_code_thp rel_code_st; do
+#   hdfs dfs -cat /user/training/assignment2/austlang_rdb/$table/part-m-00000 | wc -l
+# done
 
-lng_name lng_thl lng_thp lng_st
+# for table in lng_name lng_thl lng_thp lng_st; do
+#   hdfs dfs -cat /user/training/assignment2/austlang_rdb/$table/part-r-00000 | wc -l
+# done
+
 
 sqoop export \
   --connect "jdbc:mysql://localhost/indigenous" \
@@ -27,6 +30,7 @@ sqoop export \
   --export-dir /user/training/assignment2/austlang_rdb/lng_id \
   --fields-terminated-by '\t' \
   --m 1
+
 sqoop export \
   --connect "jdbc:mysql://localhost/indigenous" \
   --username training \
@@ -41,7 +45,7 @@ sqoop export \
   --username training \
   --password training \
   --table lng_synonym \
-  --export-dir /user/training/assignment2/austlang_rdb/lng_synonym\
+  --export-dir /user/training/assignment2/austlang_rdb/lng_synonym \
   --fields-terminated-by '\t' \
   --m 1
 
@@ -58,9 +62,10 @@ sqoop export \
   --username training \
   --password training \
   --table lng_thp \
-  --export-dir /user/training/assignment2/austlang_rdb/lng_thp\
+  --export-dir /user/training/assignment2/austlang_rdb/lng_thp \
   --fields-terminated-by '\t' \
   --m 1
+
 sqoop export \
   --connect "jdbc:mysql://localhost/indigenous" \
   --username training \
@@ -69,7 +74,6 @@ sqoop export \
   --export-dir /user/training/assignment2/austlang_rdb/lng_st \
   --fields-terminated-by '\t' \
   --m 1
-
 
 sqoop export \
   --connect "jdbc:mysql://localhost/indigenous" \
@@ -80,6 +84,7 @@ sqoop export \
   --export-dir /user/training/assignment2/austlang_rdb/rel_code_name \
   --fields-terminated-by '\t' \
   --m 1
+
 sqoop export \
   --connect "jdbc:mysql://localhost/indigenous" \
   --username training \
@@ -89,6 +94,7 @@ sqoop export \
   --export-dir /user/training/assignment2/austlang_rdb/rel_code_synonym \
   --fields-terminated-by '\t' \
   --m 1
+
 sqoop export \
   --connect "jdbc:mysql://localhost/indigenous" \
   --username training \
@@ -98,6 +104,7 @@ sqoop export \
   --export-dir /user/training/assignment2/austlang_rdb/rel_code_thl \
   --fields-terminated-by '\t' \
   --m 1
+
 sqoop export \
   --connect "jdbc:mysql://localhost/indigenous" \
   --username training \
@@ -107,6 +114,7 @@ sqoop export \
   --export-dir /user/training/assignment2/austlang_rdb/rel_code_thp \
   --fields-terminated-by '\t' \
   --m 1
+
 sqoop export \
   --connect "jdbc:mysql://localhost/indigenous" \
   --username training \

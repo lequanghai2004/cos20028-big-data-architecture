@@ -25,11 +25,11 @@ public class EntityMapper extends Mapper<LongWritable, Text, Text, NullWritable>
 
         String[] elements = value.toString().split("\\t");
         String lng_code = elements[0];
-        String[] data = elements[column].split(",| / ");
-        for (String v : data) {
-            String cleaned = v.trim();
-            if (cleaned.isEmpty()) continue;
-            text.set(lng_code + "\t" + cleaned);
+        String[] attributes = elements[column].split(",| / ");
+        for (String attribute : attributes) {
+            String attr = attribute.trim();
+            if (attr.isEmpty()) continue;
+            text.set(lng_code + "\t" + attr);
             context.write(text, NullWritable.get());
         }
     }

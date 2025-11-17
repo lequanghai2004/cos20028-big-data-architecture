@@ -36,9 +36,3 @@ LOAD DATA INPATH 'assignment2/austlang_rdb/rel_code_synonym' OVERWRITE INTO TABL
 LOAD DATA INPATH 'assignment2/austlang_rdb/rel_code_thl' OVERWRITE INTO TABLE rel_code_thl;
 LOAD DATA INPATH 'assignment2/austlang_rdb/rel_code_thp' OVERWRITE INTO TABLE rel_code_thp;
 LOAD DATA INPATH 'assignment2/austlang_rdb/rel_code_st' OVERWRITE INTO TABLE rel_code_st;
-
--- SELECT rel_code_name.lng_code, rel_code_name.lng_name , rel_code_st.lng_st
---     FROM rel_code_name
---     JOIN rel_code_st
---     ON rel_code_name.lng_code = rel_code_st.lng_code
---     WHERE rel_code_name.lng_name LIKE 'D%';

@@ -13,6 +13,7 @@ import org.apache.hadoop.io.WritableComparator;
 public class NameYearComparator extends WritableComparator {
 
 	public NameYearComparator() {
+
 		super(WritableComparable.class);
 	}
 
@@ -42,7 +43,6 @@ public class NameYearComparator extends WritableComparator {
 		}
 	}		
 	
-	
 	/** 
 	 * Overrides the default compare method, which is optimized for objects which
 	 * can be compared byte by byte.  For Name/Year this isn't the case, so we need
@@ -51,10 +51,8 @@ public class NameYearComparator extends WritableComparator {
 	 */
 	@Override
 	public int compare(byte[] b1, int s1, int l1, byte[] b2, int s2, int l2) {
-		DataInput stream1 = new DataInputStream(new ByteArrayInputStream(b1,
-				s1, l1));
-		DataInput stream2 = new DataInputStream(new ByteArrayInputStream(b2,
-				s2, l2));
+		DataInput stream1 = new DataInputStream(new ByteArrayInputStream(b1, s1, l1));
+		DataInput stream2 = new DataInputStream(new ByteArrayInputStream(b2, s2, l2));
 
 		StringPairWritable v1 = new StringPairWritable();
 		StringPairWritable v2 = new StringPairWritable();
@@ -68,5 +66,4 @@ public class NameYearComparator extends WritableComparator {
 
 		return compare(v1, v2);
 	}
-
 }
