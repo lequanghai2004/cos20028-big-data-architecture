@@ -1,0 +1,6 @@
+#!bin/bash
+
+javac -cp "/usr/lib/kafka/libs/*:." ./drive_thru/*.java ./utils/*.java
+javac -cp "/usr/lib/kafka/libs/*:." ./cashier/*.java ./utils/*.java
+javac -cp "/usr/lib/kafka/libs/*:." ./kitchen/*.java ./utils/*.java
+javac -cp "/usr/lib/kafka/libs/*:." ./cafe/*.java ./utils/*.java

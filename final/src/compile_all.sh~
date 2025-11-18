@@ -1,0 +1,4 @@
+javac -cp "/usr/lib/kafka/libs/*:." src/drive_thru/*.java src/utils/*.java
+javac -cp "/usr/lib/kafka/libs/*:." src/cashier/*.java src/utils/*.java
+javac -cp "/usr/lib/kafka/libs/*:." src/kitchen/*.java src/utils/*.java
+javac -cp "/usr/lib/kafka/libs/*:." src/cafe/*.java src/utils/*.java
